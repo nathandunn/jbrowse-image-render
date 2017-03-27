@@ -1,0 +1,55 @@
+{
+  "name": "image-server",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": {
+    "name": "Nathan Dunn",
+    "email": "nathandunn@lbl.gov"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alliance-genome/image-renderer.git"
+  },
+  "dependencies": {
+    "extract-text-webpack-plugin": "^1.0.1",
+    "immutable": "^3.8.1",
+    "manifest-revision-webpack-plugin": "^0.3.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+	"selenium-webdriver": "~2.39.0",
+    "phantomjs-server": "1.9.2",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "cross-env": "^3.0.0",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.6.0",
+    "eslint-loader": "^1.5.0",
+    "file-loader": "^0.9.0",
+    "indexof": "0.0.1",
+    "mocha": "^3.1.0",
+    "mocha-webpack": "^0.6.0",
+    "null-loader": "^0.1.1",
+    "postcss-loader": "^0.13.0",
+    "rimraf": "^2.5.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1",
+    "webpack-node-externals": "^1.4.3"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --history-api-fallback --port 2992 --hot --inline",
+    "prestart:docker": "npm install && npm run build",
+    "start:docker": "webpack-dev-server --history-api-fallback --host 0.0.0.0 --port 2992 --hot --inline",
+    "prebuild": "npm run clean && npm run copy",
+    "build": "cross-env NODE_ENV=production webpack -p --optimize-minimize",
+    "clean": "rimraf src/build",
+    "test": "NODE_ENV=test mocha-webpack --webpack-config webpack.config-test.js \"src/js_src/**/*test.js\"",
+    "test:watch": "NODE_ENV=test mocha-webpack --webpack-config webpack.config-test.js --watch \"src/js_src/**/*test.js\"",
+		"pretest": "node start-phantomjs.js",
+    "posttest": "node stop-phantomjs.js"
+  }
+}
+
